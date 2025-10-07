@@ -4,7 +4,7 @@ import './App.css'
 // NOTE: Para usar a API, você precisará configurar REACT_APP_API_BASE_URL.
 // Corrigido para usar process.env como fallback para compatibilidade.
 // O valor padrão 'http://localhost:3000/api/produtos' é usado se a variável de ambiente não estiver definida.
-const API_BASE_URL = 'http://localhost:3001/api/produtos';
+const API_BASE_URL = 'https://back-mrg.vercel.app/api/produtos';
 
 // Imagem de logo (assumindo que 'logo_redonda.png' está na pasta 'public' do projeto)
 // NOTE: Substitua pelo URL da sua imagem de logo real, se necessário.
