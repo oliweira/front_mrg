@@ -3,8 +3,8 @@ import './App.css'
 
 // NOTE: Para usar a API, você precisará configurar REACT_APP_API_BASE_URL.
 // Corrigido para usar process.env como fallback para compatibilidade.
-// O valor padrão 'http://localhost:3000/api/products' é usado se a variável de ambiente não estiver definida.
-const API_BASE_URL = 'http://localhost:3001/api/products';
+// O valor padrão 'http://localhost:3000/api/produtos' é usado se a variável de ambiente não estiver definida.
+const API_BASE_URL = 'http://localhost:3001/api/produtos';
 
 // Imagem de logo (assumindo que 'logo_redonda.png' está na pasta 'public' do projeto)
 // NOTE: Substitua pelo URL da sua imagem de logo real, se necessário.
@@ -104,7 +104,7 @@ const ProductForm = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isEditing && initialProduct) {
-      onUpdateSubmit(initialProduct.id, formData);
+      onUpdateSubmit(initialProduct.id_produto, formData);
     } else {
       onFormSubmit(formData);
     }
@@ -353,7 +353,7 @@ const SortControls = ({ sortConfig, onSort }) => {
 };
 
 // Componente de Lista de Produtos
-const ProductList = ({ products, loading, onDelete, onEdit, totalProducts, filteredCount }) => {
+const ProductList = ({ produtos, loading, onDelete, onEdit, totalProducts, filteredCount }) => {
   return (
     <div className="p-6">
       <h2 className="product-list-title">Produtos Cadastrados (API)</h2> {/* CLASSE CSS PURA: product-list-title */}
@@ -370,15 +370,15 @@ const ProductList = ({ products, loading, onDelete, onEdit, totalProducts, filte
         <p className="error-message" style={{ marginBottom: '16px' }}>Nenhum produto corresponde aos filtros aplicados.</p>
       }
       
-      {products.length === 0 && !loading && totalProducts === 0 && 
+      {produtos.length === 0 && !loading && totalProducts === 0 && 
         <p className="product-detail" style={{ textAlign: 'center' }}>Nenhum produto cadastrado ainda. Verifique se o seu Back-end está ativo em {API_BASE_URL}</p>
       }
 
       {/* CLASSE CSS PURA: product-grid */}
       <div className="product-grid">
-        {products.map((product) => (
+        {produtos.map((product) => (
           // CLASSE CSS PURA: product-card
-          <div key={product.id} className="product-card">
+          <div key={product.id_produto} className="product-card">
             {/* CLASSE CSS PURA: product-image */}
             <img 
               src={product.st_urlimagem} 
@@ -450,7 +450,7 @@ const ProductList = ({ products, loading, onDelete, onEdit, totalProducts, filte
                 </button>
                 {/* CLASSE CSS PURA: btn-delete */}
                 <button
-                  onClick={() => onDelete(product.id)}
+                  onClick={() => onDelete(product.id_produto)}
                   className="btn-delete"
                 >
                   Excluir
@@ -520,13 +520,13 @@ const AlertModal = ({ message, onConfirm }) => {
 };
 
 // Função principal de comparação para ordenação
-const sortProducts = (products, sortConfig) => {
+const sortProducts = (produtos, sortConfig) => {
     if (!sortConfig.column) {
-        return products;
+        return produtos;
     }
 
     // Cria uma cópia para evitar modificar o array original do estado
-    const sortedProducts = [...products];
+    const sortedProducts = [...produtos];
 
     sortedProducts.sort((a, b) => {
         const aValue = a[sortConfig.column] ?? ''; // Trata null/undefined como string vazia
@@ -551,7 +551,7 @@ const sortProducts = (products, sortConfig) => {
 const App = () => {
   const [appState, setAppState] = useState({
     view: 'home',
-    products: [],
+    produtos: [],
     loading: false,
     errorMessage: null,
     productToEdit: null,
@@ -585,7 +585,7 @@ const App = () => {
         ...prev, 
         loading: false,
         errorMessage: 'A URL base da API não foi definida. Verifique o arquivo .env.local.',
-        products: [],
+        produtos: [],
       }));
       return;
     }
@@ -599,7 +599,7 @@ const App = () => {
         
         if (response.ok) {
           const data = await response.json();
-          setAppState((prev) => ({ ...prev, products: data, loading: false }));
+          setAppState((prev) => ({ ...prev, produtos: data, loading: false }));
           return; // Sucesso, sai da função
         }
 
@@ -619,7 +619,7 @@ const App = () => {
         ...prev,
         loading: false,
         errorMessage: error.message || `Erro de conexão com a API em ${API_BASE_URL}. Verifique se o servidor está ativo.`,
-        products: [],
+        produtos: [],
       }));
     }
   };
@@ -801,7 +801,7 @@ const App = () => {
           const lowerCaseSearchTerm = searchTerm.toLowerCase().trim();
           const lowerCaseIdadeFilter = st_idadeFilter.toLowerCase().trim();
 
-          let filteredProducts = appState.products.filter(product => {
+          let filteredProducts = appState.produtos.filter(product => {
               // Filtro por Quantidade Mínima (nu_quantidade)
               const nu_quantidade = Number(minQuantity);
               const nu_quantidadeFilter = isNaN(nu_quantidade) || minQuantity === '' || product.nu_quantidade === null || (product.nu_quantidade >= nu_quantidade);
@@ -835,11 +835,11 @@ const App = () => {
                 onSort={handleSort}
               />
               <ProductList 
-                products={sortedProducts} // Passa a lista ORDENADA
+                produtos={sortedProducts} // Passa a lista ORDENADA
                 loading={appState.loading} 
                 onDelete={handleDelete} 
                 onEdit={handleEdit} 
-                totalProducts={appState.products.length} 
+                totalProducts={appState.produtos.length} 
                 filteredCount={sortedProducts.length} 
               />
             </>
