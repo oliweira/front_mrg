@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 // const API_BASE_URL = 'http://localhost:3000/api/products'; 
 
 const logo = {
-  url: 'MRG_sf.jpg',
+  url: 'logo_redonda.png',
   alt: 'Logo da MRG',
 };
 
