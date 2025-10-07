@@ -43,7 +43,7 @@ const HeroSection = ({ onNavigate }) => {
       </h1>
       {/* CLASSE CSS PURA: hero-subtitle */}
       <p className="hero-subtitle">
-        Esta interface comunica com uma API REST externa para gerenciar o inventário no seu banco de dados MySQL.
+        Sistema de cadastro dos produtos da empresa MRG.
       </p>
       {/* CLASSE CSS PURA: hero-actions */}
       <div className="hero-actions">
