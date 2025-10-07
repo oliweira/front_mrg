@@ -356,7 +356,7 @@ const SortControls = ({ sortConfig, onSort }) => {
 const ProductList = ({ produtos, loading, onDelete, onEdit, totalProducts, filteredCount }) => {
   return (
     <div className="p-6">
-      <h2 className="product-list-title">Produtos Cadastrados (API)</h2> {/* CLASSE CSS PURA: product-list-title */}
+      <h2 className="product-list-title">Produtos Cadastrados</h2>
       
       {!loading && totalProducts > 0 && (
         <p className="product-detail" style={{ textAlign: 'center', marginBottom: '16px' }}>
