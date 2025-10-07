@@ -360,7 +360,7 @@ const ProductList = ({ produtos, loading, onDelete, onEdit, totalProducts, filte
       
       {!loading && totalProducts > 0 && (
         <p className="product-detail" style={{ textAlign: 'center', marginBottom: '16px' }}>
-          Mostrando **{filteredCount}** de **{totalProducts}** produtos.
+          Mostrando <strong>{filteredCount}</strong> de <strong>{totalProducts}</strong> produtos.
         </p>
       )}
 
@@ -396,7 +396,7 @@ const ProductList = ({ produtos, loading, onDelete, onEdit, totalProducts, filte
                 <span>Coleção:</span> {product.st_colecao || 'N/A'}
               </p>
               <p className="product-detail">
-                <span>Idade:</span> **{product.st_idade || 'N/A'}**
+                <span>Idade:</span> <strong>{product.st_idade || 'N/A'}</strong>
               </p>
               <p className="product-detail">
                 <span>Custo:</span> {product.nu_custo}
