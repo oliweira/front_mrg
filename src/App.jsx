@@ -4,7 +4,7 @@ import './App.css'
 // NOTE: Para usar a API, você precisará configurar REACT_APP_API_BASE_URL.
 // Corrigido para usar process.env como fallback para compatibilidade.
 // O valor padrão 'http://localhost:3000/api/products' é usado se a variável de ambiente não estiver definida.
-const API_BASE_URL = 'http://localhost:3000/api/products';
+const API_BASE_URL = 'http://localhost:3001/api/products';
 
 // Imagem de logo (assumindo que 'logo_redonda.png' está na pasta 'public' do projeto)
 // NOTE: Substitua pelo URL da sua imagem de logo real, se necessário.
@@ -75,19 +75,21 @@ const ProductForm = ({
   const isEditing = !!initialProduct;
   
   const [formData, setFormData] = useState({
-    name: initialProduct?.name || '',
-    description: initialProduct?.description || '',
-    collection: initialProduct?.collection || '',
+    st_produto: initialProduct?.st_produto || '',
+    st_descricao: initialProduct?.st_descricao || '',
+    st_colecao: initialProduct?.st_colecao || '',
     st_idade: initialProduct?.st_idade || '', 
-    quantity: initialProduct?.quantity || '',
-    image: initialProduct?.image || '',
-    extraImages: initialProduct?.extraImages?.join(', ') || '',
-    extraVideos: initialProduct?.extraVideos?.join(', ') || '',
+    nu_custo: initialProduct?.nu_custo || '',
+    nu_preco: initialProduct?.nu_preco || '',
+    nu_quantidade: initialProduct?.nu_quantidade || '',
+    st_urlimagem: initialProduct?.st_urlimagem || '',
+    st_urlimagemextra: initialProduct?.st_urlimagemextra?.join(', ') || '',
+    st_urlvideoextra: initialProduct?.st_urlvideoextra?.join(', ') || '',
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === 'quantity') {
+    if (name === 'nu_quantidade') {
       const numValue = parseInt(value, 10);
       setFormData((prev) => ({
         ...prev,
@@ -111,41 +113,41 @@ const ProductForm = ({
   return (
     <div className="form-container"> {/* CLASSE CSS PURA: form-container */}
       <h2 className="form-title"> {/* CLASSE CSS PURA: form-title */}
-        {isEditing ? `Editar Produto: ${initialProduct?.name}` : 'Cadastro de Brinquedo'}
+        {isEditing ? `Editar Produto: ${initialProduct?.st_produto}` : 'Cadastro de Brinquedo'}
       </h2>
       {errorMessage && <p className="error-message">{errorMessage}</p>} {/* CLASSE CSS PURA: error-message */}
       <form onSubmit={handleSubmit} className="form-fields"> {/* Classe de agrupamento (form-fields) */}
         <div className="form-field">
-          <label className="form-label" htmlFor="name">Nome do Brinquedo *</label>
+          <label className="form-label" htmlFor="st_produto">Nome do Brinquedo *</label>
           <input
             type="text"
-            id="name"
-            name="name"
-            value={formData.name}
+            id="st_produto"
+            name="st_produto"
+            value={formData.st_produto}
             onChange={handleChange}
             required
             className="form-input"
           />
         </div>
         <div className="form-field">
-          <label className="form-label" htmlFor="description">Descrição *</label>
+          <label className="form-label" htmlFor="st_descricao">Descrição *</label>
           <textarea
-            id="description"
-            name="description"
+            id="st_descricao"
+            name="st_descricao"
             rows="4"
-            value={formData.description}
+            value={formData.st_descricao}
             onChange={handleChange}
             required
             className="form-textarea"
           />
         </div>
         <div className="form-field">
-          <label className="form-label" htmlFor="collection">Coleção</label>
+          <label className="form-label" htmlFor="st_colecao">Coleção</label>
           <input
             type="text"
-            id="collection"
-            name="collection"
-            value={formData.collection}
+            id="st_colecao"
+            name="st_colecao"
+            value={formData.st_colecao}
             onChange={handleChange}
             className="form-input"
           />
@@ -164,12 +166,12 @@ const ProductForm = ({
           />
         </div>
         <div className="form-field">
-          <label className="form-label" htmlFor="quantity">Quantidade *</label>
+          <label className="form-label" htmlFor="nu_custo">Custo *</label>
           <input
-            type="number"
-            id="quantity"
-            name="quantity"
-            value={formData.quantity}
+            type="text"
+            id="nu_custo"
+            name="nu_custo"
+            value={formData.nu_custo}
             onChange={handleChange}
             required
             min="0"
@@ -177,36 +179,62 @@ const ProductForm = ({
           />
         </div>
         <div className="form-field">
-          <label className="form-label" htmlFor="image">Imagem Principal (URL) *</label>
+          <label className="form-label" htmlFor="nu_preco">Preço *</label>
+          <input
+            type="text"
+            id="nu_preco"
+            name="nu_preco"
+            value={formData.nu_preco}
+            onChange={handleChange}
+            required
+            min="0"
+            className="form-input"
+          />
+        </div>        
+        <div className="form-field">
+          <label className="form-label" htmlFor="nu_quantidade">Quantidade *</label>
+          <input
+            type="number"
+            id="nu_quantidade"
+            name="nu_quantidade"
+            value={formData.nu_quantidade}
+            onChange={handleChange}
+            required
+            min="0"
+            className="form-input"
+          />
+        </div>
+        <div className="form-field">
+          <label className="form-label" htmlFor="st_urlimagem">Imagem Principal (URL) *</label>
           <input
             type="url"
-            id="image"
-            name="image"
-            value={formData.image}
+            id="st_urlimagem"
+            name="st_urlimagem"
+            value={formData.st_urlimagem}
             onChange={handleChange}
             required
             className="form-input"
           />
         </div>
         <div className="form-field">
-          <label className="form-label" htmlFor="extraImages">Imagens Extras (URLs, separadas por vírgula)</label>
+          <label className="form-label" htmlFor="st_urlimagemextra">Imagens Extras (URLs, separadas por vírgula)</label>
           <input
             type="text"
-            id="extraImages"
-            name="extraImages"
-            value={formData.extraImages}
+            id="st_urlimagemextra"
+            name="st_urlimagemextra"
+            value={formData.st_urlimagemextra}
             onChange={handleChange}
             placeholder="http://exemplo.com/img1.jpg, http://exemplo.com/img2.jpg"
             className="form-input"
           />
         </div>
         <div className="form-field">
-          <label className="form-label" htmlFor="extraVideos">Vídeos Extras (URLs, separadas por vírgula)</label>
+          <label className="form-label" htmlFor="st_urlvideoextra">Vídeos Extras (URLs, separadas por vírgula)</label>
           <input
             type="text"
-            id="extraVideos"
-            name="extraVideos"
-            value={formData.extraVideos}
+            id="st_urlvideoextra"
+            name="st_urlvideoextra"
+            value={formData.st_urlvideoextra}
             onChange={handleChange}
             placeholder="http://exemplo.com/vid1.mp4, http://exemplo.com/vid2.mp4"
             className="form-input"
@@ -299,8 +327,8 @@ const SortControls = ({ sortConfig, onSort }) => {
     };
 
     const sortOptions = [
-        { key: 'name', label: 'Nome' },
-        { key: 'quantity', label: 'Quantidade' },
+        { key: 'st_produto', label: 'Nome' },
+        { key: 'nu_quantidade', label: 'Quantidade' },
         { key: 'st_idade', label: 'Idade' },
     ];
 
@@ -353,8 +381,8 @@ const ProductList = ({ products, loading, onDelete, onEdit, totalProducts, filte
           <div key={product.id} className="product-card">
             {/* CLASSE CSS PURA: product-image */}
             <img 
-              src={product.image} 
-              alt={product.name} 
+              src={product.st_urlimagem} 
+              alt={product.st_produto} 
               className="product-image" 
               // Placeholder em caso de erro no carregamento da imagem
               onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/300x192/CCCCCC/333333?text=Imagem+N/A'; }} 
@@ -362,40 +390,46 @@ const ProductList = ({ products, loading, onDelete, onEdit, totalProducts, filte
             {/* CLASSE CSS PURA: product-info */}
             <div className="product-info">
               {/* CLASSE CSS PURA: product-name */}
-              <h3 className="product-name">{product.name}</h3>
+              <h3 className="product-name">{product.st_produto}</h3>
               {/* CLASSE CSS PURA: product-detail */}
               <p className="product-detail">
-                <span>Coleção:</span> {product.collection || 'N/A'}
+                <span>Coleção:</span> {product.st_colecao || 'N/A'}
               </p>
               <p className="product-detail">
                 <span>Idade:</span> **{product.st_idade || 'N/A'}**
               </p>
               <p className="product-detail">
-                <span>Quantidade:</span> {product.quantity}
+                <span>Custo:</span> {product.nu_custo}
+              </p>
+              <p className="product-detail">
+                <span>Preço:</span> {product.nu_preco}
+              </p>
+              <p className="product-detail">
+                <span>Quantidade:</span> {product.nu_quantidade}
               </p>
               {/* CLASSE CSS PURA: product-description */}
-              <p className="product-description">{product.description}</p>
+              <p className="product-description">{product.st_descricao}</p>
               
               {/* Exibir imagens e vídeos extras, se existirem */}
-              {product.extraImages && product.extraImages.length > 0 && (
+              {product.st_urlimagemextra && product.st_urlimagemextra.length > 0 && (
                 // CLASSE CSS PURA: extra-info-section
                 <div className="extra-info-section">
                   <span className="extra-info-label">Imagens Extras:</span>
                   {/* CLASSE CSS PURA: extra-images-list */}
                   <div className="extra-images-list">
-                    {product.extraImages.map((img, index) => (
+                    {product.st_urlimagemextra.map((img, index) => (
                       // CLASSE CSS PURA: extra-image
                       <img key={index} src={img} alt={`Imagem extra ${index + 1}`} className="extra-image" onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/100x100/CCCCCC/333333?text=Erro'; }} />
                     ))}
                   </div>
                 </div>
               )}
-              {product.extraVideos && product.extraVideos.length > 0 && (
+              {product.st_urlvideoextra && product.st_urlvideoextra.length > 0 && (
                 <div className="extra-info-section">
                   <span className="extra-info-label">Vídeos Extras:</span>
                   {/* CLASSE CSS PURA: extra-videos-list */}
                   <div className="extra-videos-list">
-                    {product.extraVideos.map((vid, index) => (
+                    {product.st_urlvideoextra.map((vid, index) => (
                       // CLASSE CSS PURA: extra-video-link
                       <a key={index} href={vid} target="_blank" rel="noopener noreferrer" className="extra-video-link">
                         Vídeo {index + 1}
@@ -530,7 +564,7 @@ const App = () => {
     st_idadeFilter: '',
     minQuantity: '', 
     // Configuração de ordenação
-    sortConfig: { column: 'name', direction: 'asc' }, 
+    sortConfig: { column: 'st_produto', direction: 'asc' }, 
   });
 
   // Função para lidar com a navegação
@@ -600,15 +634,17 @@ const App = () => {
   // Função auxiliar para preparar o payload
   const preparePayload = (formData) => {
     return {
-      name: formData.name,
-      description: formData.description,
-      collection: formData.collection,
+      st_produto: formData.st_produto,
+      st_descricao: formData.st_descricao,
+      st_colecao: formData.st_colecao,
       st_idade: formData.st_idade, 
-      quantity: Number(formData.quantity),
-      image: formData.image,
+      nu_custo: Number(formData.nu_custo), 
+      nu_preco: Number(formData.nu_preco), 
+      nu_quantidade: Number(formData.nu_quantidade),
+      st_urlimagem: formData.st_urlimagem,
       // Converte a string de URLs separadas por vírgula em um array de strings
-      extraImages: formData.extraImages.split(',').map((url) => url.trim()).filter(Boolean),
-      extraVideos: formData.extraVideos.split(',').map((url) => url.trim()).filter(Boolean),
+      st_urlimagemextra: formData.st_urlimagemextra.split(',').map((url) => url.trim()).filter(Boolean),
+      st_urlvideoextra: formData.st_urlvideoextra.split(',').map((url) => url.trim()).filter(Boolean),
     };
   };
 
@@ -767,8 +803,8 @@ const App = () => {
 
           let filteredProducts = appState.products.filter(product => {
               // Filtro por Quantidade Mínima (nu_quantidade)
-              const quantity = Number(minQuantity);
-              const quantityFilter = isNaN(quantity) || minQuantity === '' || product.quantity === null || (product.quantity >= quantity);
+              const nu_quantidade = Number(minQuantity);
+              const nu_quantidadeFilter = isNaN(nu_quantidade) || minQuantity === '' || product.nu_quantidade === null || (product.nu_quantidade >= nu_quantidade);
 
               // Filtro por Classificação de Idade (st_idade)
               const idadeFilter = lowerCaseIdadeFilter === '' || 
@@ -776,12 +812,12 @@ const App = () => {
 
               // Filtro por Termo de Busca (st_produto, descrição, coleção)
               const textMatch = (
-                  product.name?.toLowerCase().includes(lowerCaseSearchTerm) ||
-                  product.description?.toLowerCase().includes(lowerCaseSearchTerm) ||
-                  product.collection?.toLowerCase().includes(lowerCaseSearchTerm)
+                  product.st_produto?.toLowerCase().includes(lowerCaseSearchTerm) ||
+                  product.st_descricao?.toLowerCase().includes(lowerCaseSearchTerm) ||
+                  product.st_colecao?.toLowerCase().includes(lowerCaseSearchTerm)
               );
 
-              return quantityFilter && idadeFilter && textMatch;
+              return nu_quantidadeFilter && idadeFilter && textMatch;
           });
           
           // --- 2. ORDENAÇÃO ---
